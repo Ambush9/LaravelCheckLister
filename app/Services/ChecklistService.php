@@ -9,7 +9,7 @@ class ChecklistService
 
     public function sync_checklist(Checklist $checklist, int $user_id): Checklist
     {
-        $user_checklist = Checklist::firstOrCreate([
+        $checklist = Checklist::firstOrCreate([
                 'user_id' => $user_id,
                 'checklist_id' => $checklist->id,
             ],
@@ -18,6 +18,8 @@ class ChecklistService
                 'checklist_group_id' => $checklist->checklist_group_id,
             ]);
 
-        return $user_checklist;
+        $checklist->touch();
+
+        return $checklist;
     }
 }
