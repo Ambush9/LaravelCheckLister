@@ -27,7 +27,7 @@ class ChecklistShow extends Component
 
     public function toggle_task($task_id)
     {
-        if(in_array($task_id, $this->opened_tasks)) {
+        if (in_array($task_id, $this->opened_tasks)) {
             $this->opened_tasks = array_diff($this->opened_tasks, [$task_id]);
         } else {
             $this->opened_tasks[] = $task_id;
@@ -50,6 +50,8 @@ class ChecklistShow extends Component
                 $user_task['completed_at'] = now();
                 $user_task->save();
             }
+
+            $this->emit('task_complete', $task_id, $task->checklist_id);
         }
     }
 }
